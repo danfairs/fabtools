@@ -1,6 +1,7 @@
 """
 Fabric tools for managing supervisor processes
 """
+import os.path
 from fabric.api import *
 from fabtools.files import upload_template
 
@@ -12,7 +13,7 @@ def reload_config():
     sudo("supervisorctl reload")
 
 
-def add_process(name, options=None):
+def add_process(name, options=None, template_root=''):
     """
     Add a supervisor process
     """
@@ -21,7 +22,7 @@ def add_process(name, options=None):
     options['name'] = name
 
     upload_template('/etc/supervisor/conf.d/%(name)s.conf' % locals(),
-        'supervisor/%(name)s.conf' % locals(),
+        os.path.join(template_root, 'supervisor/%(name)s.conf' % locals()),
         context=options,
         use_sudo=True)
 
