@@ -1,6 +1,7 @@
 """
 Idempotent API for managing nginx sites
 """
+import os.path
 from fabric.api import *
 from fabtools.files import upload_template, is_link
 from fabtools.icanhaz.deb import package
@@ -15,7 +16,7 @@ def server():
     started('nginx')
 
 
-def site(server_name, options=None, enabled=True):
+def site(server_name, options=None, enabled=True, template_root=''):
     """
     I can haz nginx site
     """
@@ -24,7 +25,10 @@ def site(server_name, options=None, enabled=True):
     options['server_name'] = server_name
 
     upload_template('/etc/nginx/sites-available/%(server_name)s.conf' % locals(),
-        'nginx/sites/%(server_name)s.conf' % locals(),
+        os.path.join(
+            template_root,
+            'nginx/sites/%(server_name)s.conf' % locals()
+        ),
         context=options,
         use_sudo=True)
 
