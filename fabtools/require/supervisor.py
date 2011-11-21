@@ -1,13 +1,13 @@
 """
 Idempotent API for managing supervisor processes
 """
-from fabtools.icanhaz import deb
+from fabtools.require import deb
 from fabtools.supervisor import *
 
 
 def process(name, options=None, template_root=''):
     """
-    I can haz supervisor process
+    Require a supervisor process
     """
     if isinstance(name, basestring):
         name = [name]
