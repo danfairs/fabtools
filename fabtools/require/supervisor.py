@@ -18,8 +18,6 @@ redirect_stderr=true
 
 
 def _process(name, template_contents=None, template_source=None, **kwargs):
-    deb.package('supervisor')
-
     config_filename = '/etc/supervisor/conf.d/%s.conf' % name
 
     context = {}
@@ -59,6 +57,8 @@ def processes(process_infos):
     reloading when subsequent calls are made. processes() allows a number of
     processes to be configured with a single configuration reload.
     """
+    deb.package('supervisor')
+
     names = []
     for info in process_infos:
         try:
