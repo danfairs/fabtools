@@ -40,7 +40,7 @@ def process(name, template_contents=None, template_source=None, **kwargs):
         'template_source': template_source,
     }
     kw.update(kwargs)
-    processes((name, kw),)
+    processes([(name, kw)])
 
 
 def processes(process_infos):
